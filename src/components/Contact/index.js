@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
 function ContactForm() {
-    <section>
-        <h1>Contact me</h1>
-        <form id="contact-form">
-            //name input
-            <div>
-                <label htmlFor="name">Name:</label>
-                <input type="text" name="name"/>
-            </div>
-            //email input
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input type="email" name="email"/>
-            </div>
-            //message text area
-            <div>
-                <label htmlFor="message">Message:</label>
-                <textarea rows="5" name="message"/>
-            </div>
-            <button type="submit">Submit</button>
-        </form>
-    </section>
+
+    const [formState, setFormState] = useState({ name: '', email: '', message: ''});
+    const { name, email, message } = formState;
+
+    function handleChange(e) {
+        setFormState({...formState, [e.target.name]: e.target.value})
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(formState);
+    }
+
+    return (
+        <section>
+            <h1>Contact me</h1>
+            <form id="contact-form" onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" name="name" defaultValue={name} onChange={handleChange}/>
+                </div>
+                <div>
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" name="email" defaultValue={email} onChange={handleChange}/>
+                </div>
+                <div>
+                    <label htmlFor="message">Message:</label>
+                    <textarea rows="5" name="message" defaultValue={message} onChange={handleChange}/>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    );
 }
 
 export default ContactForm;
